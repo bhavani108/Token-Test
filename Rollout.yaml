@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata: 
+  name: token-test-rollout
+spec:
+   replicas: null
+   revisionHistoryLimit: 2
+   selector: 
+     matchLables: 
+       app: token-test
+    template:
+      metadata: 
+        lables: 
+          app: token-test
+      spec:
+        containers:
+          -name: app
+          image: bhavanimuvvala/token-test:green 
+          ports:
+            - containerPort: 4000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+  strategy:
+    blueGreen:
+      activeService: token-test-active-service
+      previewService: token-test-preview-Service
+      autoPromotionEnabled: false

@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: token-test-ingress
+spec:
+  rules:
+  - host: token-test.activeservice.com  
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: token-test-active-service
+            port:
+              number: 80
+  - host: token-test.previewservice.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: token-test-preview-service
+            port:
+              number: 80
+  - host: token-test.rootservice.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: token-test-root-service
+            port:
+              number: 80
